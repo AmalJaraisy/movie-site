@@ -6,7 +6,7 @@ function App() {
   return (
     <>
       <Header />
-      <Footer/>
+      
       <main className="page container">
         <section className="page__intro">
           <h1>הקטלוג</h1>
@@ -14,6 +14,7 @@ function App() {
         </section>
         <MovieList />
       </main>
+      <Footer/>
     </>
   );
 }
