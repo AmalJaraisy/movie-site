@@ -4,6 +4,7 @@ import "./MovieCard.css";
 function MovieCard({ title, year, genre, rating, poster, available , duration}) {
   const [liked, setLiked] = useState(false);
   const [count, setCount] = useState(0);
+  const [rating,setRating] = useState(0);
 
   function handleLike() {
     setLiked(!liked);
@@ -29,7 +30,26 @@ function MovieCard({ title, year, genre, rating, poster, available , duration}) 
           <span className="movie-card__genre">{genre}</span>
           <span className="movie-card__rating">★ {rating}</span>
         </div>
+        <div>
+          {[1,2,3,4,5].map((star) => (
+            <span onClick={() => setRating(star)}>
+              {star <= rating?"★":"☆"}
+            </span>
+          ))}
+        </div>
       </div>
+      <div>
+      <h3>{movie.title}</h3>
+
+      {[1, 2, 3, 4, 5].map((star) => (
+        <span
+          key={star}
+          onClick={() => updateRating(movie.id, star)}
+        >
+          {star <= rating ? "★" : "☆"}
+        </span>
+      ))}
+    </div>
     </article>
   );
 }

@@ -8,7 +8,7 @@ function App() {
   const [onlyAvailable, setOnlyAvailable] = useState(false);
   const [selectedGenre, setSelectedGenre] = useState("all");
   const [visibleCount, setVisibleCount] = useState(4);
-
+const [ratings, setRatings] = useState({});
   const topRated = movies.filter(movie => movie.rating >= 8.7);
 
   const genres = movies
@@ -24,6 +24,13 @@ function App() {
   }
 
   const visibleMovies = shownMovies.slice(0, visibleCount);
+
+  const updateRating = (movieId, stars) => {
+  setRatings({
+    ...ratings,
+    [movieId]: stars
+  });
+};
 
   function toggleAvailable() {
     setOnlyAvailable(!onlyAvailable);
@@ -83,6 +90,11 @@ function App() {
             </button>
           </div>
         )}
+        <MovieList
+        movies={movies}
+      ratings={ratings}
+      updateRating={updateRating}
+      />
       </main>
       <Footer />
     </>
