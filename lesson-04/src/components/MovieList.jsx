@@ -1,7 +1,7 @@
 import MovieCard from "./MovieCard.jsx";
 import "./MovieList.css";
 
-function MovieList({ title, movies , ratings , updateRating}) {
+function MovieList({ title, movies }) {
   return (
     <section className="movie-list">
       <h2 className="movie-list__title">{title}</h2>
@@ -23,19 +23,6 @@ function MovieList({ title, movies , ratings , updateRating}) {
           />
         ))}
       </div>
-      
-    <div>
-      {movies.map((movie) => (
-        <MovieCard
-          key={movie.id}
-          movie={movie}
-          rating={ratings[movie.id] || 0}
-          updateRating={updateRating}
-        />
-      ))}
-    </div>
-  
-
     </section>
   );
 }
