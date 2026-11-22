@@ -6,7 +6,6 @@ import SearchBar from "./components/SearchBar.jsx";
 import AddMovieForm from "./components/AddMovieForm.jsx";
 import { movies } from "./data/movies.js";
 
-
 function App() {
   const [onlyAvailable, setOnlyAvailable] = useState(false);
   const [query, setQuery] = useState("");
@@ -16,22 +15,22 @@ function App() {
   const topRated = movies.filter(movie => movie.rating >= 8.7);
 
   const text = query.trim().toLowerCase();
-  
 
   let shownMovies = movies;
   if (onlyAvailable) {
     shownMovies = shownMovies.filter(movie => movie.available);
   }
-   if (genre !== "all") {
+  if (genre !== "all") {
     shownMovies = shownMovies.filter(movie => movie.genre === genre);
   }
   if (text !== "") {
     shownMovies = shownMovies.filter(movie =>
-      movie.title.toLowerCase().includes(text)||
-      String(movie.year).includes(text),
+      movie.title.toLowerCase().includes(text)
     );
   }
-    shownMovies = [...shownMovies].sort(compareMovies);
+  shownMovies = [...shownMovies].sort(compareMovies);
+
+  const isFiltered = onlyAvailable || genre !== "all" || text !== "";
 
   function compareMovies(a, b) {
     if (sortBy === "year") {
@@ -40,18 +39,17 @@ function App() {
     if (sortBy === "title") {
       return a.title.localeCompare(b.title);
     }
-    if(sortBy=== 'rating'){
     return b.rating - a.rating;
-    }
-    if(sortBy=== 'duration'){
-      return a.duration - b.duration;
-    }
   }
-
-
 
   function toggleAvailable() {
     setOnlyAvailable(!onlyAvailable);
+  }
+
+  function resetFilters() {
+    setOnlyAvailable(false);
+    setQuery("");
+    setGenre("all");
   }
 
   return (
@@ -63,15 +61,15 @@ function App() {
           <p>סרטים שכדאי לראות — הישנים הטובים והחדשים.</p>
         </section>
 
-         <MovieList title="הכי מדורגים" movies={topRated} />
+        <MovieList title="הכי מדורגים" movies={topRated} />
 
         <div className="toolbar">
-           <SearchBar
+          <SearchBar
             query={query}
             onQueryChange={setQuery}
             genre={genre}
             onGenreChange={setGenre}
-             sortBy={sortBy}
+            sortBy={sortBy}
             onSortChange={setSortBy}
           />
           <button
@@ -80,9 +78,17 @@ function App() {
           >
             רק זמינים לצפייה
           </button>
+          {isFiltered && (
+            <button className="btn" onClick={resetFilters}>
+              ניקוי
+            </button>
+          )}
         </div>
 
-        <MovieList title="כל הסרטים" movies={shownMovies} />
+        <MovieList
+          title={`כל הסרטים (${shownMovies.length})`}
+          movies={shownMovies}
+        />
 
         <AddMovieForm />
       </main>
