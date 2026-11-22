@@ -7,7 +7,7 @@ function SearchBar() {
         <span className="search-bar__label">חיפוש</span>
         <input
           className="search-bar__input"
-          type="text"
+          type="search"
           placeholder="שם הסרט..."
         />
       </label>
